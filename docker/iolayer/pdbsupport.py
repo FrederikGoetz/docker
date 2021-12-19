@@ -31,7 +31,7 @@ class PDBmixin:
 
         regexes = [atom_regex1, atom_regex2]
 
-        pdb_info = {}
+        protein = {}
 
         prop_list = ['element_id', 'amino_acid', 'temperature_factor', 'x', 'y', 'z', 'occupancy', 'element']
 
@@ -41,18 +41,18 @@ class PDBmixin:
                 for match in matches:
 
                     chain_id = match.group('chain_id')
-                    if not chain_id in pdb_info:
-                        pdb_info[chain_id] = {}
+                    if not chain_id in protein:
+                        protein[chain_id] = {}
 
                     res_id = match.group('residue_id')
-                    if not res_id in pdb_info[chain_id]:
-                        pdb_info[chain_id][res_id] = {}
+                    if not res_id in protein[chain_id]:
+                        protein[chain_id][res_id] = {}
 
                     atom_id = match.group('atom_id')
-                    if not atom_id in pdb_info[chain_id][res_id]:
-                        pdb_info[chain_id][res_id][atom_id] = {}
+                    if not atom_id in protein[chain_id][res_id]:
+                        protein[chain_id][res_id][atom_id] = {}
 
                     for prop in prop_list:
-                        pdb_info[chain_id][res_id][atom_id][prop] = match.group(prop)
+                        protein[chain_id][res_id][atom_id][prop] = match.group(prop)
 
-            return cls(pdb_info)
+            return cls(protein)
